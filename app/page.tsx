@@ -8,6 +8,7 @@ import Timeline from "./components/Timeline";
 import { LoveSection, Gallery, ProposalModal } from "./components/Sections";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import RomanticScrollStory from "./components/roles";
 
 export default function Home() {
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center transition-all bg-white/10 backdrop-blur-sm border-b border-white/10 hover:bg-white/30">
         <div className="flex items-center gap-2">
           <Heart className="text-rose-500 fill-current animate-beat" size={24} />
-          <span className="font-serif text-xl font-bold text-rose-600 tracking-wider">LoveStory</span>
+          <span className="font-serif text-xl font-bold text-rose-600 tracking-wider">Our Story</span>
         </div>
         <div>
           {/* Could add nav links here if needed, keeping it minimal for now */}
@@ -48,6 +49,9 @@ export default function Home() {
       <section id="gallery">
         <Gallery />
       </section>
+      <section id="romanticScrollStory">
+        <RomanticScrollStory />
+      </section>
 
       <section id="proposal" className="pb-20">
         <div className="flex flex-col items-center justify-center py-20 bg-gradient-to-t from-rose-100 to-pink-50">
@@ -57,10 +61,10 @@ export default function Home() {
 
       <footer className="bg-rose-900 text-pink-100 py-8 text-center">
         <p className="font-serif text-sm">
-          Made with ❤️ for you • Forever & Always
+          Made with Love just for you • Forever & Always
         </p>
         <p className="text-xs mt-2 opacity-60">
-          © {new Date().getFullYear()} Our Love Journey
+          © {new Date().getFullYear()} With love Aadhi
         </p>
       </footer>
 

@@ -25,25 +25,31 @@ export function LoveSection() {
     return (
         <div
             className="relative h-screen flex items-center justify-center bg-fixed bg-center bg-cover"
-            style={{ backgroundImage: "url('/boat.jpeg')" }}  // fixed
+            style={{ backgroundImage: "url('/boat.jpeg')" }}
         >
             <div className="absolute inset-0 bg-rose-900/40 backdrop-blur-[2px]"></div>
 
-            <div
-                className="z-10 text-center px-4"
-                data-aos="zoom-in"
-                data-aos-duration="2000"
-            >
-                <h2 className="text-5xl md:text-8xl font-bold text-white font-serif drop-shadow-2xl">
-                    You mean everything and
+            <div className="z-10 text-center px-4 max-w-4xl mx-auto space-y-6">
+                <h2
+                    className="text-4xl md:text-7xl font-bold text-white font-serif drop-shadow-2xl leading-tight"
+                    data-aos="fade-up"
+                    data-aos-duration="1500"
+                >
+                    You mean everything
                 </h2>
-                <h2 className="text-3xl md:text-5xl font-bold text-white font-serif drop-shadow-2xl">
-                    you are my everything wasthu
+                <h2
+                    className="text-2xl md:text-5xl font-medium text-pink-100 font-serif drop-shadow-xl italic"
+                    data-aos="fade-up"
+                    data-aos-delay="400"
+                    data-aos-duration="1500"
+                >
+                    and you are my everything <span className="text-rose-400 font-bold">Wasthu</span>
                 </h2>
             </div>
         </div>
     );
 }
+
 // --- 2. Gallery Section: Minimalist Grid ---
 export function Gallery() {
     const images = ["/1.jpeg", "/2.jpeg", "/3.jpeg", "/4.jpeg"];
@@ -51,7 +57,7 @@ export function Gallery() {
     return (
         <section className="py-24 px-6 bg-stone-50">
             <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-16 space-y-4">
+                <div className="text-center mb-16 space-y-4" data-aos="fade-up">
                     <span className="text-rose-500 uppercase tracking-widest text-xs font-bold">Memories</span>
                     <h2 className="text-3xl md:text-5xl font-serif text-stone-800">
                         I always wish you were with me
@@ -64,6 +70,8 @@ export function Gallery() {
                         <div
                             key={idx}
                             className="group relative h-[400px] overflow-hidden rounded-2xl bg-gray-200 shadow-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+                            data-aos="fade-up"
+                            data-aos-delay={idx * 150}
                         >
                             <img
                                 src={src}
@@ -88,27 +96,37 @@ export function ProposalModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [isCelebrating, setIsCelebrating] = useState(false);
     const [celebrationHearts, setCelebrationHearts] = useState<any[]>([]);
+    const [showLoveText, setShowLoveText] = useState(false);
+
+    // Handle initial click with delay
+    const handleOpenModal = () => {
+        setTimeout(() => {
+            setIsOpen(true);
+        }, 800); // 800ms delay for suspense
+    };
 
     // Function to handle the "Yes" click
     const handleAccept = () => {
         setIsCelebrating(true);
+        setShowLoveText(true);
 
         // Generate burst of hearts
         const hearts = Array.from({ length: 50 }).map((_, i) => ({
             id: i,
-            left: `${Math.random() * 100}%`, // Random horizontal position
-            animationDuration: `${Math.random() * 1.5 + 1}s`, // Random speed (1s to 2.5s)
-            scale: Math.random() * 1.5 + 0.5, // Random size
-            color: Math.random() > 0.5 ? "text-rose-500" : "text-pink-300", // Mix of colors
+            left: `${Math.random() * 100}%`,
+            animationDuration: `${Math.random() * 1.5 + 1}s`,
+            scale: Math.random() * 1.5 + 0.5,
+            color: Math.random() > 0.5 ? "text-rose-500" : "text-pink-300",
         }));
         setCelebrationHearts(hearts);
 
-        // Close modal after animation plays (2.5 seconds)
+        // Close modal after animation plays
         setTimeout(() => {
             setIsOpen(false);
             setIsCelebrating(false);
             setCelebrationHearts([]);
-        }, 2500);
+            setShowLoveText(false);
+        }, 4000); // Extended to let the love text linger
     };
 
     return (
@@ -123,13 +141,18 @@ export function ProposalModal() {
             </div>
 
             <div className="relative z-10 max-w-lg mx-auto space-y-8">
-                <h2 className="text-4xl font-serif text-stone-800">
+                <h2
+                    className="text-4xl font-serif text-stone-800"
+                    data-aos="fade-down"
+                >
                     I have one important question...
                 </h2>
 
                 <button
-                    onClick={() => setIsOpen(true)}
+                    onClick={handleOpenModal}
                     className="group relative inline-flex items-center gap-3 px-10 py-5 bg-stone-900 text-white rounded-full overflow-hidden transition-all duration-300 hover:bg-rose-500 hover:shadow-[0_10px_40px_-10px_rgba(244,63,94,0.5)]"
+                    data-aos="zoom-in"
+                    data-aos-delay="300"
                 >
                     <span className="relative z-10 font-medium tracking-wide text-lg">Click Me</span>
                     <Heart className="relative z-10 w-5 h-5 transition-transform duration-300 group-hover:scale-125 group-hover:fill-current" />
@@ -143,17 +166,17 @@ export function ProposalModal() {
                     {/* Darker Blur Backdrop */}
                     <div
                         className="absolute inset-0 bg-stone-900/60 backdrop-blur-md transition-opacity duration-500"
-                        onClick={() => !isCelebrating && setIsOpen(false)} // Prevent closing during celebration
+                        onClick={() => !isCelebrating && setIsOpen(false)}
                     />
 
-                    {/* Celebration Hearts Overlay (Only visible when celebrating) */}
+                    {/* Celebration Hearts Overlay */}
                     {isCelebrating && (
                         <div className="absolute inset-0 z-[60] pointer-events-none overflow-hidden">
                             {celebrationHearts.map((heart) => (
                                 <Heart
                                     key={heart.id}
                                     fill="currentColor"
-                                    className={`absolute bottom-0 opacity-0 ${heart.color} animate-float-up`}
+                                    className={`absolute bottom-0 opacity-0 ${heart.color}`}
                                     style={{
                                         left: heart.left,
                                         transform: `scale(${heart.scale})`,
@@ -164,8 +187,24 @@ export function ProposalModal() {
                         </div>
                     )}
 
+                    {/* Love Text Overlay */}
+                    {showLoveText && (
+                        <div className="flex flex-col items-center justify-center">
+                            <div className="absolute inset-0 z-[70] flex items-center justify-center pointer-events-none">
+                                <h1 className="text-6xl md:text-8xl font-serif text-white drop-shadow-[0_0_15px_rgba(244,63,94,0.8)] animate-pulse-slow">
+                                    Love you manika ❤️
+                                </h1>
+
+                            </div>
+                            <div className="absolute inset-0 z-[70] mt-50 flex items-center justify-center pointer-events-none">
+                                <h1 className="text-4xl md:text-6xl font-serif text-white drop-shadow-[0_0_15px_rgba(244,63,94,0.8)] animate-pulse-slow">
+                                    I deserve a big kiss baba
+                                </h1>
+                            </div></div>
+                    )}
+
                     {/* Modal Content Card */}
-                    <div className={`relative w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12 text-center border border-white/50 overflow-hidden transition-all duration-500 ${isCelebrating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'}`}>
+                    <div className={`relative w-full max-w-2xl bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 md:p-12 text-center border border-white/50 overflow-hidden transition-all duration-500 ${isCelebrating ? 'scale-95 opacity-0 pointer-events-none' : 'scale-100 opacity-100'}`}>
 
                         {/* Close Button */}
                         {!isCelebrating && (
@@ -211,8 +250,6 @@ export function ProposalModal() {
                                 >
                                     <Sparkles size={20} />
                                     {isCelebrating ? "Yay! ❤️" : "Yes, Forever!"}
-
-                                    {isCelebrating && <Heart size={20} fill="currentColor" />}
                                 </button>
                             </div>
                         </div>
@@ -220,19 +257,15 @@ export function ProposalModal() {
                 </div>
             )}
 
-            {/* Inline Styles for the specific float-up animation */}
             <style jsx>{`
-        @keyframes floatUp {
-          0% {
-            transform: translateY(100vh) scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: translateY(-20vh) scale(1.5);
-            opacity: 0;
-          }
-        }
-      `}</style>
+                @keyframes floatUp {
+                    0% { transform: translateY(100vh) scale(1); opacity: 1; }
+                    100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+                }
+                .animate-pulse-slow {
+                    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+                }
+            `}</style>
         </div>
     );
 }

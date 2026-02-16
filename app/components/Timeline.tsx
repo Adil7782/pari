@@ -8,9 +8,10 @@ interface TimelineItemProps {
     title: string;
     description: string;
     index: number;
+    image?: string;
 }
 
-export const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, description, index }) => {
+export const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, description, index, image }) => {
     const isEven = index % 2 === 0;
 
     return (
@@ -31,6 +32,17 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, descrip
                 <span className="mb-1 text-sm font-bold text-rose-500 bg-rose-100 px-2 py-1 rounded inline-block">
                     {year}
                 </span>
+
+                {image && (
+                    <div className="relative h-32 w-full mb-4">
+                        <img
+                            src={image}
+                            alt={title}
+                            className="object-contain w-full h-full rounded-lg"
+                        />
+                    </div>
+                )}
+
                 <h3 className="mb-2 font-bold text-gray-800 text-xl font-serif">{title}</h3>
                 <p className="text-sm leading-snug tracking-wide text-gray-600 text-opacity-100">
                     {description}
@@ -42,14 +54,49 @@ export const TimelineItem: React.FC<TimelineItemProps> = ({ year, title, descrip
 
 export default function Timeline() {
     const events = [
-        { year: "2017", title: "Where it all began", description: "That Day i met u with Sesara.Those eyes got my attention that day mottas" },
-        { year: "2018", title: "Day of propose", description: "You asked me who is my crush and i told u to see the mirror and rest is history ." },
-        { year: "2019", title: "The Year made us more closer", description: "Through every challenge including Covid, we held hands and came out stronger than ever. Weve missed each other more and more but we stood strong" },
-        { year: "2020", title: "Darkest  Memories", description: "Darkest moments that will last a lifetime, Broke me into pieces i lost my self." },
+        {
+            year: "2017",
+            title: "Where it all began",
+            description: "That Day i met u with Sesara.Those eyes got my attention that day mottas",
+            image: "/17.png"
+        },
+        {
+            year: "2018",
+            title: "Day of propose",
+            description: "You asked me who is my crush and i told u to see the mirror and rest is history .",
+            image: "/18.png"
+        },
+        {
+            year: "2019",
+            title: "The Year made us more closer",
+            description: "Through every challenge including Covid, we held hands and came out stronger than ever. Weve missed each other more and more but we stood strong",
+            image: "/19.png"
+        },
+        {
+            year: "2020",
+            title: "Darkest  Memories",
+            description: "Darkest moments that will last a lifetime, Broke me into pieces i lost my self.",
+            image: "/20.png"
 
-        { year: "2023", title: "The Year i found my self again", description: "I found my self again and i started to love my self more and more." },
-        { year: "2025", title: "We found us again", description: "We started to talk to each other and love each other more and more and we started to make memories again." },
-        { year: "2026", title: "A Promise", description: "A beautiful promise not to be broken ever again " },
+        },
+        {
+            year: "2023",
+            title: "The Year i found my self again",
+            description: "I found my self again and i started to love my self more and more.",
+            image: "/23.png"
+        },
+        {
+            year: "2025",
+            title: "We found us again",
+            description: "We started to talk to each other and love each other more and more and we started to make memories again.",
+            image: "/25.png"
+        },
+        {
+            year: "2026",
+            title: "A Promise",
+            description: "A beautiful promise not to be broken ever again ",
+            image: "/26.png"
+        },
     ];
 
     return (
@@ -68,6 +115,7 @@ export default function Timeline() {
                         year={event.year}
                         title={event.title}
                         description={event.description}
+                        image={event.image}
                         index={index}
                     />
                 ))}
